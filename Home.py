@@ -27,7 +27,7 @@ if not exists("./yolov7x.pt"):
     wget.download("https://github.com/WongKinYiu/yolov7/releases/download/v0.1/yolov7x.pt")
     detector = Detector()
     detector.load_model('./yolov7x.pt')
-    tracker = YOLOv7_DeepSORT(reID_model_path="./deep_sort/model_weights/mars-small128.pb", detector=detector)
+    # tracker = YOLOv7_DeepSORT(reID_model_path="./deep_sort/model_weights/mars-small128.pb", detector=detector)
     st.write("Đã khởi tạo tracker")
 
 uploaded_file = st.file_uploader("Tải video lên", type=["mp4"])
@@ -45,6 +45,7 @@ if uploaded_file is not None:
 
     # st.write("Input: ", tfile.name)
     # st.write("Ouput: ", "./result/haha.mp4")
+    tracker = YOLOv7_DeepSORT(reID_model_path="./deep_sort/model_weights/mars-small128.pb", detector=detector)
     tracker.track_video(video=str(tfile.name), output="./haha.mp4", show_live=False, skip_frames=0, count_objects=True, verbose=15)
 
     # check file exist
