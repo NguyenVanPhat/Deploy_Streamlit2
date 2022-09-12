@@ -11,6 +11,7 @@ from bridge_wrapper import *
 # from PIL import Image
 import tempfile
 # import cv2
+from os.path import exists
 
 st.set_page_config(
     page_title="Web_App_Of_Phat",
@@ -22,11 +23,11 @@ st.header('')
 path = ""
 
 # os.system("wget https://github.com/WongKinYiu/yolov7/releases/download/v0.1/yolov7x.pt")
-wget.download("https://github.com/WongKinYiu/yolov7/releases/download/v0.1/yolov7x.pt")
-
-detector = Detector()
-detector.load_model('./yolov7x.pt')
-tracker = YOLOv7_DeepSORT(reID_model_path="./deep_sort/model_weights/mars-small128.pb", detector=detector)
+if not exists("./yolov7x.pt"):
+    wget.download("https://github.com/WongKinYiu/yolov7/releases/download/v0.1/yolov7x.pt")
+    detector = Detector()
+    detector.load_model('./yolov7x.pt')
+    tracker = YOLOv7_DeepSORT(reID_model_path="./deep_sort/model_weights/mars-small128.pb", detector=detector)
 
 uploaded_file = st.file_uploader("Tải video lên", type=["mp4"])
 # click = st.button("Tiến hành Object Traking")
