@@ -32,9 +32,8 @@ if not exists("./yolov7x.pt"):
 @st.cache(hash_funcs={"MyUnhashableClass": lambda _: None})
 # @st.cache
 def load_model(text):
-    a = text
     detector_temp = Detector()
-    detector_temp.load_model('./yolov7x.pt')
+    detector_temp.load_model(text)
     return detector_temp
 
 
@@ -52,7 +51,7 @@ if uploaded_file is not None:
 
     # st.write("Input: ", tfile.name)
     # st.write("Ouput: ", "./result/haha.mp4")
-    detector = load_model("hahaha")
+    detector = load_model("./yolov7x.pt")
     tracker = YOLOv7_DeepSORT(reID_model_path="./deep_sort/model_weights/mars-small128.pb", detector=detector)
     tracker.track_video(video=str(tfile.name), output="./haha.mp4", show_live=False, skip_frames=0, count_objects=True,
                         verbose=15)
