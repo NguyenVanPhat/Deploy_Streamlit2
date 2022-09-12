@@ -44,7 +44,7 @@ def load_model(text):
 # if click and (uploaded_file is None):
 #     st.caption("Làm ơn tải lên Video")
 detector = load_model("./yolov7x.pt")
-uploaded_file = st.file_uploader("Tải video lên")
+uploaded_file = st.file_uploader("Tải video lên", type=["mp4", "jpg", "png", "jpeg"])
 # global choose_of_user
 if uploaded_file is not None and uploaded_file.type == "video/mp4":
     name_file = uploaded_file.name
