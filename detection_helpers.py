@@ -2,9 +2,9 @@
 import cv2
 import streamlit
 import torch
-import numpy as np
+# import numpy as np
 from numpy import random
-import streamlit as st
+# import streamlit as st
 
 
 from models.experimental import attempt_load
@@ -154,8 +154,8 @@ class Detector:
             # với im0.shape=(1080, 1920, 3) có det=[1570.0, 173.0, 1684.0, 395.0, 0.906877, 0.0]
             det[:, :4] = scale_coords(img.shape[2:], det[:, :4], im0.shape).round()
 
-            thickness_bb = np.round((im0[0] + im0[1]) / 1000)
-            st.write("thickness_bb = ", thickness_bb)
+            thickness_bb = round((im0.shape[0] + im0.shape[1]) / 1000)
+            # st.write("thickness_bb = ", thickness_bb)
             if thickness_bb < 2:
                 thickness_bb = 2
 
