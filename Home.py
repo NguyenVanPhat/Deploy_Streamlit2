@@ -63,8 +63,7 @@ if uploaded_file is not None:
     # st.write(f)
 
     st.subheader("Đã xử lý xong video !")
-    st.write('Vào tab "Xem Video" nếu Video có thời lượng dưới 4s')
-    st.write('Vào tab "Tải Video" nếu Video có thời lượng trên 4s')
+    st.write('Vào tab "Xem Video" để xem video kết quả')
     # detector = 0
     # tracker = 0
     # os.remove("./traced_model.pt")
