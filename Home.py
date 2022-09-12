@@ -28,6 +28,7 @@ if not exists("./yolov7x.pt"):
     detector = Detector()
     detector.load_model('./yolov7x.pt')
     tracker = YOLOv7_DeepSORT(reID_model_path="./deep_sort/model_weights/mars-small128.pb", detector=detector)
+    st.write("Đã khởi tạo tracker")
 
 uploaded_file = st.file_uploader("Tải video lên", type=["mp4"])
 # click = st.button("Tiến hành Object Traking")
