@@ -3,7 +3,6 @@ A Moduele which binds Yolov7 repo with Deepsort with modifications
 '''
 
 import os
-import streamlit as st
 
 os.environ['TF_CPP_MIN_LOG_LEVEL'] = '3'  # comment out below line to enable tensorflow logging outputs
 import time
@@ -108,12 +107,11 @@ class YOLOv7_DeepSORT:
             vid = cv2.VideoCapture(int(video))
         except:
             vid = cv2.VideoCapture(video)
-        # st.write("Đọc file Video thành công")
 
         """Start Code of Phat"""
         # Get FPS of video
-        # fps_video_src = imageio.get_reader(str(video), 'ffmpeg').get_meta_data()['fps']
-        fps_video_src = int(vid.get(cv2.CAP_PROP_FPS))
+        import imageio
+        fps_video_src = imageio.get_reader(str(video), 'ffmpeg').get_meta_data()['fps']
         print("\n FPS of Video: ", fps_video_src)
         """End Code of Phat"""
 
@@ -284,12 +282,16 @@ class YOLOv7_DeepSORT:
 
                 color = colors[int(track.track_id) % len(colors)]  # draw bbox on screen
                 color = [i * 255 for i in color]
-                cv2.rectangle(frame, (int(bbox[0]), int(bbox[1])), (int(bbox[2]), int(bbox[3])), color, 2)
+                width * height
+                thickness_bb = round((width + height) / 1000)
+                if thickness_bb <2:
+                    thickness_bb = 2
+                cv2.rectangle(frame, (int(bbox[0]), int(bbox[1])), (int(bbox[2]), int(bbox[3])), color, thickness_bb)
                 cv2.rectangle(frame, (int(bbox[0]), int(bbox[1] - 30)),
                               (int(bbox[0]) + (len(class_name) + len(str(track.track_id))) * 17, int(bbox[1])), color,
                               -1)
                 cv2.putText(frame, class_name + " : " + str(track.track_id), (int(bbox[0]), int(bbox[1] - 11)), 0, 0.6,
-                            (255, 255, 255), 1, lineType=cv2.LINE_AA)
+                            (255, 255, 255), thickness_bb-1, lineType=cv2.LINE_AA)
 
                 """Start Code of Phat"""
                 center_bbox_last_sub1 = []
@@ -359,13 +361,10 @@ class YOLOv7_DeepSORT:
             result = np.asarray(frame)
             result = cv2.cvtColor(frame, cv2.COLOR_RGB2BGR)
 
-            if output:
-                out.write(result)  # save output video
-                # st.write("Ghi frame của Video")
+            if output: out.write(result)  # save output video
 
             if show_live:
                 cv2.imshow("Output Video", result)
                 if cv2.waitKey(1) & 0xFF == ord('q'): break
 
-        # cv2.destroyAllWindows()
-
+        cv2.destroyAllWindows()
