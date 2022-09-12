@@ -5,9 +5,9 @@ from os import walk
 # os.system("lshw -C video")
 # import tensorflow as tf
 # print("Num GPUs Available: ", len(tf.config.experimental.list_physical_devices('GPU')))
-# from detection_helpers import *
-# from tracking_helpers import *
-# from bridge_wrapper import *
+from detection_helpers import *
+from tracking_helpers import *
+from bridge_wrapper import *
 # from PIL import Image
 import tempfile
 # import cv2
@@ -22,18 +22,38 @@ st.header('')
 st.header('')
 path = ""
 
-# os.system("wget https://github.com/WongKinYiu/yolov7/releases/download/v0.1/yolov7x.pt")
 if not exists("./yolov7x.pt"):
     wget.download("https://github.com/WongKinYiu/yolov7/releases/download/v0.1/yolov7x.pt")
-    st.write("Đã tải yolov7x.pt tracker")
+
+
+# os.system("wget https://github.com/WongKinYiu/yolov7/releases/download/v0.1/yolov7x.pt")
+
+
+@st.cache(hash_funcs={"MyUnhashableClass": lambda _: None})
+# @st.cache
+def load_model(text):
+    detector = Detector()
+    detector.load_model('./yolov7x.pt')
+    tracker = YOLOv7_DeepSORT(reID_model_path="./deep_sort/model_weights/mars-small128.pb", detector=detector)
+    tracker.track_video(video=str(text), output="./haha.mp4", show_live=False, skip_frames=0, count_objects=True,
+                        verbose=15)
 
 
 # click = st.button("Tiến hành Object Traking")
 
 # if click and (uploaded_file is None):
 #     st.caption("Làm ơn tải lên Video")
+uploaded_file = st.file_uploader("Tải video lên", type=["mp4"])
+if uploaded_file is not None:
+    name_file = uploaded_file.name
+    tfile = tempfile.NamedTemporaryFile(delete=False)
+    tfile.write(uploaded_file.read())
+    # vf = cv2.VideoCapture(tfile.name)
+    # st.write(type(vf))
 
-
+    # st.write("Input: ", tfile.name)
+    # st.write("Ouput: ", "./result/haha.mp4")
+    load_model(tfile.name)
 
     # check file exist
     # f = []
@@ -42,11 +62,9 @@ if not exists("./yolov7x.pt"):
     #     f.extend(filenames)
     # st.write(f)
 
-
-
-
-
-
-
-
-
+    st.subheader("Đã xử lý xong video !")
+    st.write('Vào tab "Xem Video" nếu Video có thời lượng dưới 4s')
+    st.write('Vào tab "Tải Video" nếu Video có thời lượng trên 4s')
+    # detector = 0
+    # tracker = 0
+    # os.remove("./traced_model.pt")
