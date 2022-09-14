@@ -18,18 +18,17 @@ import gc
 @profile
 def main_haha():
     # gc.enable()
-    st.write("Số đối tượng không thể truy cập được GC thu thập: ", gc.collect())
-    st.write("Rác không thể thu gom: ", gc.garbage)
-    os.system("python -m memory_profiler Home.py")
     st.set_page_config(
         page_title="Web_App_Of_Phat",
-        # page_icon="😃",
+        page_icon="😃",
     )
     st.markdown("<h1 style='text-align: center; color: red;'>Web App of Phat</h1>", unsafe_allow_html=True)
     st.header('')
     st.header('')
     path = ""
-
+    st.write("Số đối tượng không thể truy cập được GC thu thập: ", gc.collect())
+    st.write("Rác không thể thu gom: ", gc.garbage)
+    os.system("python -m memory_profiler Home.py")
     # def get_dir_size(path='.'):
     #     total = 0
     #     with os.scandir(path) as it:
