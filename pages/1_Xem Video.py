@@ -5,7 +5,9 @@ import os
 # from Home import choose_of_user
 # from PIL import Image
 
+os.system("python -m memory_profiler Home.py")
 click_show = st.button("Xem Video")
+
 # if click_show and choose_of_user == "video":
 if click_show:
     # show video
