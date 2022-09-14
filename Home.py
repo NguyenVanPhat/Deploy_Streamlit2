@@ -88,7 +88,9 @@ def main_haha():
         # os.remove(str(tfile.name))
         del tfile
         del tracker
-        gc.collect()
+        del detector
+        # gc.collect()
+        gc.collect(generation=2)
         # del name_file
 
         # check file exist
@@ -123,6 +125,11 @@ def main_haha():
             # choose_of_user = "image"
             # image = Image.open('./haha.jpg')
             st.image(result, caption='Image Result')
+            del detector
+            del result
+            del tfile
+            gc.collect(generation=2)
+
 
 
 main_haha()
