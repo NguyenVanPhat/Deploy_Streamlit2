@@ -10,7 +10,6 @@ click_show = st.button("Xem Video")
 
 # if click_show and choose_of_user == "video":
 if click_show:
-    os.system("python -m memory_profiler Home.py")
     # show video
     video_file = open("./haha.mp4", 'rb')
     # video_bytes = video_file.read()
