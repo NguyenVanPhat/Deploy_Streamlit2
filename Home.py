@@ -12,7 +12,7 @@ import tempfile
 import cv2
 from os.path import exists
 from PIL import Image
-from memory_profiler import profile
+# from memory_profiler import profile
 import gc
 
 # @profile
