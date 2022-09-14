@@ -186,7 +186,9 @@ class YOLOv7_DeepSORT:
             percent_current = round(frame_num/total_frame*100)
             my_bar.progress(percent_current)
             if percent_current > 48 and percent_current < 51:
-                st.write("dung lượng giữa quá trình: " + str(round(get_dir_size()*0.000001)) + " Mb")
+                a = get_dir_size()
+                st.write("dung lượng giữa quá trình: " + str(round(a*0.000001)) + " Mb")
+                del a
             # nếu "skip_frames" có giá trị, thì khi Frame chạy đến vị trí "skip_frames" quy định sẽ chạy..
             # lệnh "continue" khi đó sẽ bỏ qua khối xử lý bên dưới và quay lại loop while bên trên cho..
             # đến hết video, đồng nghĩa video đầu ra sẽ ko có các frame từ "skip_frames" trở đi.
