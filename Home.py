@@ -23,9 +23,9 @@ def main_haha():
     os.system("python -m memory_profiler Home.py")
     st.set_page_config(
         page_title="Web_App_Of_Phat",
-        page_icon="😃",
+        # page_icon="😃",
     )
-    st.markdown("<h1 style='text-align: center; color: red;'>😃 Web App of Phat 😂</h1>", unsafe_allow_html=True)
+    st.markdown("<h1 style='text-align: center; color: red;'>Web App of Phat</h1>", unsafe_allow_html=True)
     st.header('')
     st.header('')
     path = ""
