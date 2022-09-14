@@ -17,7 +17,6 @@ import gc
 
 @profile
 def main_haha():
-    # gc.enable()
     st.set_page_config(
         page_title="Web_App_Of_Phat",
         page_icon="😃",
@@ -26,8 +25,8 @@ def main_haha():
     st.header('')
     st.header('')
     path = ""
-    st.write("Số đối tượng không thể truy cập được GC thu thập: ", gc.collect())
-    st.write("Rác không thể thu gom: ", gc.garbage)
+    # st.write("Số đối tượng không thể truy cập được GC thu thập: ", gc.collect())
+    # st.write("Rác không thể thu gom: ", gc.garbage)
     os.system("python -m memory_profiler Home.py")
     # def get_dir_size(path='.'):
     #     total = 0
@@ -85,8 +84,9 @@ def main_haha():
                             verbose=15)
         # Giải phóng dung lượng disk
         # os.remove(str(tfile.name))
-        # del tfile
-        # del tracker
+        del tfile
+        del tracker
+        gc.collect()
         # del name_file
 
         # check file exist
