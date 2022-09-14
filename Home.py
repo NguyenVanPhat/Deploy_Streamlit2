@@ -113,4 +113,5 @@ def main_haha():
             # image = Image.open('./haha.jpg')
             st.image(result, caption='Image Result')
 
+os.system("python -m memory_profiler Home.py")
 main_haha()
