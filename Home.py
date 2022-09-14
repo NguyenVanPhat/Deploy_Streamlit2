@@ -15,7 +15,7 @@ from PIL import Image
 from memory_profiler import profile
 import gc
 
-@profile
+# @profile
 def main_haha():
     st.set_page_config(
         page_title="Web_App_Of_Phat",
@@ -27,7 +27,9 @@ def main_haha():
     path = ""
     # st.write("Số đối tượng không thể truy cập được GC thu thập: ", gc.collect())
     # st.write("Rác không thể thu gom: ", gc.garbage)
+    """
     os.system("python -m memory_profiler Home.py")
+    """
     # def get_dir_size(path='.'):
     #     total = 0
     #     with os.scandir(path) as it:
@@ -65,7 +67,7 @@ def main_haha():
         # giải phóng dung lượng bằng cách xoá file Result Video cũ
         if exists("./haha.mp4"):
             os.remove("./haha.mp4")
-            st.write("Đã xoá video cũ")
+            # st.write("Đã xoá video cũ")
         # a = get_dir_size()
         # st.write("dung lượng khởi điểm: " + str(round(a * 0.000001)) + " Mb")
         # del a
