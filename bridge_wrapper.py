@@ -3,7 +3,7 @@ A Moduele which binds Yolov7 repo with Deepsort with modifications
 '''
 
 import os
-
+import streamlit as st
 os.environ['TF_CPP_MIN_LOG_LEVEL'] = '3'  # comment out below line to enable tensorflow logging outputs
 import time
 import tensorflow as tf
@@ -56,6 +56,23 @@ def pprint(name_variable, variable):
         print(
             "------------------------------------------ KẾT THÚC BIẾN {0} ------------------------------------------".format(
                 name_variable))
+
+# def show_size_disk(path):
+#     size = 0
+#     for path, dirs, files in os.walk(path):
+#         for f in files:
+#             fp = os.path.join(path, f)
+#             size += os.path.getsize(fp)
+#     return size
+def get_dir_size(path='.'):
+    total = 0
+    with os.scandir(path) as it:
+        for entry in it:
+            if entry.is_file():
+                total += entry.stat().st_size
+            elif entry.is_dir():
+                total += get_dir_size(entry.path)
+    return total
 
 
 class YOLOv7_DeepSORT:
@@ -120,6 +137,8 @@ class YOLOv7_DeepSORT:
             out = cv2.VideoWriter(output, codec, fps, (width, height))
             fps_video_src = fps
             print("\n FPS of Video: ", fps_video_src)
+            total_frame = int(vid.get(cv2.CAP_PROP_FRAME_COUNT))
+            total_frame_100 = round(total_frame * (100 / total_frame))
 
 
         # "frame_num" dùng để đếm số frame hiện tại trong video
@@ -151,6 +170,7 @@ class YOLOv7_DeepSORT:
         """End Code of Phat"""
 
         # Khối xử lý chính của Chương trình - Vòng lặp chạy qua từng Frame video và xử lý từng frame đó
+        my_bar = st.progress(0)
         while True:  # while video is running
             # "frame" có type = numpy.ndarray; shape = (1080, 1920, 3);
             return_value, frame = vid.read()
@@ -163,6 +183,10 @@ class YOLOv7_DeepSORT:
             # thì mới xử lý frame thực sự trong video.
             # haha
             print("\n FRAME = ", frame_num)
+            percent_current = round(frame_num/total_frame*100)
+            my_bar.progress(percent_current)
+            if percent_current > 48 and percent_current < 51:
+                st.write("dung lượng giữa quá trình: " + str(round(get_dir_size()*0.000001)) + " Mb")
             # nếu "skip_frames" có giá trị, thì khi Frame chạy đến vị trí "skip_frames" quy định sẽ chạy..
             # lệnh "continue" khi đó sẽ bỏ qua khối xử lý bên dưới và quay lại loop while bên trên cho..
             # đến hết video, đồng nghĩa video đầu ra sẽ ko có các frame từ "skip_frames" trở đi.
