@@ -17,7 +17,9 @@ import gc
 
 @profile
 def main_haha():
-    gc.enable()
+    # gc.enable()
+    st.write("Số đối tượng không thể truy cập được GC thu thập: ", gc.collect())
+    st.write("Rác không thể thu gom: ", gc.garbage)
     os.system("python -m memory_profiler Home.py")
     st.set_page_config(
         page_title="Web_App_Of_Phat",
