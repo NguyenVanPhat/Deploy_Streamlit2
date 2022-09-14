@@ -125,10 +125,10 @@ def main_haha():
             # choose_of_user = "image"
             # image = Image.open('./haha.jpg')
             st.image(result, caption='Image Result')
-            del detector
-            del result
-            del tfile
-            gc.collect(generation=2)
+            # del detector
+            # del result
+            # del tfile
+            # gc.collect(generation=2)
 
 
 
