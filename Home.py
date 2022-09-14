@@ -13,9 +13,12 @@ import cv2
 from os.path import exists
 from PIL import Image
 from memory_profiler import profile
+import gc
 
 @profile
 def main_haha():
+    gc.enable()
+    os.system("python -m memory_profiler Home.py")
     st.set_page_config(
         page_title="Web_App_Of_Phat",
         page_icon="😃",
@@ -25,15 +28,15 @@ def main_haha():
     st.header('')
     path = ""
 
-    def get_dir_size(path='.'):
-        total = 0
-        with os.scandir(path) as it:
-            for entry in it:
-                if entry.is_file():
-                    total += entry.stat().st_size
-                elif entry.is_dir():
-                    total += get_dir_size(entry.path)
-        return total
+    # def get_dir_size(path='.'):
+    #     total = 0
+    #     with os.scandir(path) as it:
+    #         for entry in it:
+    #             if entry.is_file():
+    #                 total += entry.stat().st_size
+    #             elif entry.is_dir():
+    #                 total += get_dir_size(entry.path)
+    #     return total
 
     # os.system("wget https://github.com/WongKinYiu/yolov7/releases/download/v0.1/yolov7x.pt")
 
@@ -63,10 +66,10 @@ def main_haha():
         if exists("./haha.mp4"):
             os.remove("./haha.mp4")
             st.write("Đã xoá video cũ")
-        a = get_dir_size()
-        st.write("dung lượng khởi điểm: " + str(round(a * 0.000001)) + " Mb")
-        del a
-        name_file = uploaded_file.name
+        # a = get_dir_size()
+        # st.write("dung lượng khởi điểm: " + str(round(a * 0.000001)) + " Mb")
+        # del a
+        # name_file = uploaded_file.name
         tfile = tempfile.NamedTemporaryFile(delete=False)
         tfile.write(uploaded_file.read())
         # vf = cv2.VideoCapture(tfile.name)
@@ -80,10 +83,10 @@ def main_haha():
                             count_objects=True,
                             verbose=15)
         # Giải phóng dung lượng disk
-        os.remove(str(tfile.name))
-        del tfile
-        del tracker
-        del name_file
+        # os.remove(str(tfile.name))
+        # del tfile
+        # del tracker
+        # del name_file
 
         # check file exist
         # f = []
@@ -94,9 +97,9 @@ def main_haha():
 
         st.subheader("Đã xử lý xong video !")
         st.write('Vào tab "Xem Video" để xem video kết quả')
-        a = get_dir_size()
-        st.write("dung lượng kết thúc: " + str(round(a * 0.000001)) + " Mb")
-        del a
+        # a = get_dir_size()
+        # st.write("dung lượng kết thúc: " + str(round(a * 0.000001)) + " Mb")
+        # del a
         # choose_of_user = "video"
         # detector = 0
         # tracker = 0
@@ -118,5 +121,5 @@ def main_haha():
             # image = Image.open('./haha.jpg')
             st.image(result, caption='Image Result')
 
-os.system("python -m memory_profiler Home.py")
+
 main_haha()
