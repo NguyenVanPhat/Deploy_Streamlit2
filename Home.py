@@ -27,9 +27,9 @@ def main_haha():
     path = ""
     # st.write("Số đối tượng không thể truy cập được GC thu thập: ", gc.collect())
     # st.write("Rác không thể thu gom: ", gc.garbage)
-    """
-    os.system("python -m memory_profiler Home.py")
-    """
+
+    # os.system("python -m memory_profiler Home.py")
+
     # def get_dir_size(path='.'):
     #     total = 0
     #     with os.scandir(path) as it:
