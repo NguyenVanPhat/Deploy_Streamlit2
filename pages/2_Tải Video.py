@@ -1,6 +1,5 @@
 import streamlit as st
 
-
 with open("./haha.mp4", "rb") as file:
     btn = st.download_button(
         label="Download",
@@ -8,3 +7,5 @@ with open("./haha.mp4", "rb") as file:
         file_name="result_video.mp4",
         mime="mp4"
     )
+file.close()
+file = None
