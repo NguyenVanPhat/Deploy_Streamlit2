@@ -15,6 +15,7 @@ from PIL import Image
 from memory_profiler import profile
 import gc
 
+
 @profile
 def main_haha():
     os.system("python -m memory_profiler Home.py")
@@ -26,6 +27,7 @@ def main_haha():
     st.header('')
     st.header('')
     path = ""
+
     # gc.set_threshold(300, 5, 5)
     # st.write("Số đối tượng không thể truy cập được GC thu thập: ", gc.collect())
     # st.write("Rác không thể thu gom: ", gc.garbage)
@@ -135,6 +137,10 @@ def main_haha():
         # gc.collect()
 
     uploaded_file = None
+
+
 # gc.enable()
 main_haha()
 st.write("Khởi động")
+gc.collect(generation=1)
+gc.collect(generation=2)
