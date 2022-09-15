@@ -12,24 +12,23 @@ import tempfile
 import cv2
 from os.path import exists
 from PIL import Image
-# from memory_profiler import profile
+from memory_profiler import profile
 import gc
 
-# @profile
+@profile
 def main_haha():
-    st.set_page_config(
-        page_title="Web_App_Of_Phat",
-        page_icon="😃",
-    )
+    os.system("python -m memory_profiler Home.py")
+    # st.set_page_config(
+    #     page_title="Web_App_Of_Phat",
+    #     # page_icon="😃",
+    # )
     st.markdown("<h1 style='text-align: center; color: red;'>Web App of Phat</h1>", unsafe_allow_html=True)
     st.header('')
     st.header('')
     path = ""
+    # gc.set_threshold(300, 5, 5)
     # st.write("Số đối tượng không thể truy cập được GC thu thập: ", gc.collect())
     # st.write("Rác không thể thu gom: ", gc.garbage)
-
-    # os.system("python -m memory_profiler Home.py")
-
     # def get_dir_size(path='.'):
     #     total = 0
     #     with os.scandir(path) as it:
@@ -70,7 +69,6 @@ def main_haha():
             # st.write("Đã xoá video cũ")
         # a = get_dir_size()
         # st.write("dung lượng khởi điểm: " + str(round(a * 0.000001)) + " Mb")
-        # del a
         # name_file = uploaded_file.name
         tfile = tempfile.NamedTemporaryFile(delete=False)
         tfile.write(uploaded_file.read())
@@ -85,13 +83,17 @@ def main_haha():
                             count_objects=True,
                             verbose=15)
         # Giải phóng dung lượng disk
-        # os.remove(str(tfile.name))
-        del tfile
-        del tracker
-        del detector
+        os.remove(str(tfile.name))
+        # del tfile
+        # del tracker
+        # del detector
+        # gc.collect(generation=2)
         # gc.collect()
-        gc.collect(generation=2)
         # del name_file
+        # del a
+        detector = None
+        tracker = None
+        tfile = None
 
         # check file exist
         # f = []
@@ -102,9 +104,8 @@ def main_haha():
 
         st.subheader("Đã xử lý xong video !")
         st.write('Vào tab "Xem Video" để xem video kết quả')
-        # a = get_dir_size()
-        # st.write("dung lượng kết thúc: " + str(round(a * 0.000001)) + " Mb")
-        # del a
+        # st.write("dung lượng kết thúc: " + str(round(get_dir_size() * 0.000001)) + " Mb")
+        # gc.collect()
         # choose_of_user = "video"
         # detector = 0
         # tracker = 0
@@ -125,11 +126,15 @@ def main_haha():
             # choose_of_user = "image"
             # image = Image.open('./haha.jpg')
             st.image(result, caption='Image Result')
-            # del detector
-            # del result
-            # del tfile
-            # gc.collect(generation=2)
+        # del result
+        # del tfile
+        # del detector
+        result = None
+        tfile = None
+        detector = None
+        # gc.collect()
 
-
-
+    uploaded_file = None
+# gc.enable()
 main_haha()
+st.write("Khởi động")
