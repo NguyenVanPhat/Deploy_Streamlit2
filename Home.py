@@ -18,6 +18,7 @@ import gc
 
 @profile
 def main_haha():
+    os.system("streamlit cache clear")
     os.system("python -m memory_profiler Home.py")
     # st.set_page_config(
     #     page_title="Web_App_Of_Phat",
@@ -142,5 +143,3 @@ def main_haha():
 # gc.enable()
 main_haha()
 st.write("Khởi động")
-gc.collect(generation=1)
-gc.collect(generation=2)
