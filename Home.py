@@ -12,15 +12,15 @@ import tempfile
 import cv2
 from os.path import exists
 from PIL import Image
-from memory_profiler import profile
-import gc
+# from memory_profiler import profile
+# import gc
 st.markdown("<h1 style='text-align: center; color: red;'>Web App of Phat</h1>", unsafe_allow_html=True)
 st.header('')
 st.header('')
 
-@profile
+# @profile
 def main_haha():
-    os.system("python -m memory_profiler Home.py")
+    # os.system("python -m memory_profiler Home.py")
     # st.set_page_config(
     #     page_title="Web_App_Of_Phat",
     #     # page_icon="😃",
@@ -49,13 +49,14 @@ def main_haha():
         wget.download("https://github.com/WongKinYiu/yolov7/releases/download/v0.1/yolov7x.pt")
         detector_temp = Detector()
         detector_temp.load_model(text)
-        # os.remove(text)
-        # os.remove("./traced_model.pt")
+        os.remove(text)
+        os.remove("./traced_model.pt")
         # st.write("Đã load Model")
         return detector_temp
 
     # @st.cache(max_entries=2)
-    @st.experimental_singleton
+    # @st.experimental_singleton
+    @st.experimental_singleton(suppress_st_warning=True)
     def track_vdieo(text):
         detector = load_model("./yolov7x.pt")
         tracker = YOLOv7_DeepSORT(reID_model_path="./deep_sort/model_weights/mars-small128.pb", detector=detector)
@@ -66,7 +67,8 @@ def main_haha():
         tracker = None
 
     # @st.cache(max_entries=2)
-    @st.experimental_singleton
+    # @st.experimental_singleton
+    @st.experimental_singleton(suppress_st_warning=True)
     def detect_image(txt):
         detector = load_model("./yolov7x.pt")
         result = detector.detect(str(txt), plot_bb=True)
@@ -160,4 +162,4 @@ def main_haha():
 # gc.enable()
 
 main_haha()
-st.write("Khởi động")
+# st.write("Khởi động")
