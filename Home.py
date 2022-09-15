@@ -141,5 +141,5 @@ def main_haha():
 
 # gc.enable()
 main_haha()
-os.system("streamlit cache clear")
+# os.system("streamlit cache clear")
 st.write("Khởi động")
