@@ -14,7 +14,7 @@ from os.path import exists
 from PIL import Image
 # from memory_profiler import profile
 import gc
-from streamlit import caching
+
 st.markdown("<h1 style='text-align: center; color: red;'>Web App of Phat</h1>", unsafe_allow_html=True)
 st.header('')
 st.header('')
@@ -88,7 +88,6 @@ def main_haha():
     #     st.caption("Làm ơn tải lên Video")
     os.system("python populate_cache.py")
     os.system("streamlit cache clear")
-    caching.clear_cache()
     st.experimental_singleton.clear()
     st.experimental_memo.clear()
 
