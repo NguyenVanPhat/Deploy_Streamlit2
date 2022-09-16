@@ -13,7 +13,8 @@ import cv2
 from os.path import exists
 from PIL import Image
 # from memory_profiler import profile
-# import gc
+import gc
+from streamlit import caching
 st.markdown("<h1 style='text-align: center; color: red;'>Web App of Phat</h1>", unsafe_allow_html=True)
 st.header('')
 st.header('')
@@ -44,8 +45,8 @@ def main_haha():
     # chạy trước, Do đó nó sẽ ko chạy nữa mà lấy luôn kết quả của lần chạy trước (nghĩa là chỉ chạy 1 lần duy nhất)
     # điều này giúp Model ko phải load đi load lại tránh tràn RAM hoặc disk của máy chủ (streamlit cloud)
     # @st.cache(hash_funcs={"MyUnhashableClass": lambda _: None})
-    @st.cache
-    def load_model(text):
+    @st.cache()
+    def load_model(text):        
         wget.download("https://github.com/WongKinYiu/yolov7/releases/download/v0.1/yolov7x.pt")
         detector_temp = Detector()
         detector_temp.load_model(text)
@@ -54,8 +55,9 @@ def main_haha():
         # st.write("Đã load Model")
         return detector_temp
 
-    # @st.cache(max_entries=2)
+    # @st.cache(max_entries=1)
     # @st.experimental_singleton
+    @st.experimental_memo
     @st.experimental_singleton(suppress_st_warning=True)
     def track_vdieo(text):
         detector = load_model("./yolov7x.pt")
@@ -66,8 +68,9 @@ def main_haha():
         detector = None
         tracker = None
 
-    # @st.cache(max_entries=2)
+    # @st.cache(max_entries=1)
     # @st.experimental_singleton
+    @st.experimental_memo
     @st.experimental_singleton(suppress_st_warning=True)
     def detect_image(txt):
         detector = load_model("./yolov7x.pt")
@@ -83,7 +86,12 @@ def main_haha():
 
     # if click and (uploaded_file is None):
     #     st.caption("Làm ơn tải lên Video")
+    os.system("python populate_cache.py")
+    os.system("streamlit cache clear")
+    caching.clear_cache()
     st.experimental_singleton.clear()
+    st.experimental_memo.clear()
+
     uploaded_file = st.file_uploader("Tải video lên", type=["mp4", "jpg", "png", "jpeg"])
     # global choose_of_user
     if uploaded_file is not None and uploaded_file.type == "video/mp4":
@@ -102,7 +110,6 @@ def main_haha():
         # st.write("Input: ", tfile.name)
         # st.write("Ouput: ", "./result/haha.mp4")
         track_vdieo(tfile.name)
-
 
         # Giải phóng dung lượng disk
         os.remove(str(tfile.name))
@@ -141,7 +148,8 @@ def main_haha():
         tfile.write(uploaded_file.read())
 
         detect_image(tfile.name)
-        st.experimental_singleton.clear()
+
+        # st.experimental_singleton.clear()
 
         # result = detector.detect(str(tfile.name), plot_bb=True)
 
@@ -159,7 +167,18 @@ def main_haha():
         # gc.collect()
 
     uploaded_file = None
+    try:
+        for name in dir():
+            # st.write("Name: ", name)
+            if not name.startswith('_'):
+                del globals()[name]
+        gc.collect()
+    except:
+        pass
+
 # gc.enable()
 
 main_haha()
+# gc.collect(generation=1)
+# gc.collect(generation=2)
 # st.write("Khởi động")

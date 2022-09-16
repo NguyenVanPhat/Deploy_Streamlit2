@@ -35,7 +35,7 @@ def get_dir_size(path='.'):
     return total
 # a = round(get_dir_size() * 0.000001)
 # st.write("dung lượng: " + str(a) + " Mb")
-os.system("python -m memory_profiler Run.py")
+# os.system("python -m memory_profiler Run.py")
 
 
 # cap = cv2.VideoCapture("People_Demo.mp4")

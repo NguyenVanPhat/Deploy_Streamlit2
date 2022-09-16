@@ -1,5 +1,6 @@
 import streamlit as st
 import os
+import gc
 # import sys
 # sys.path.insert(1, './')
 # from Home import choose_of_user
@@ -18,8 +19,18 @@ def main_haha():
         video_file = None
         # video_bytes = video_file.read()
     click_show = None
+    try:
+        for name in dir():
+            # st.write("Name: ", name)
+            if not name.startswith('_'):
+                del globals()[name]
+        gc.collect()
+    except:
+        pass
     # if click_show and choose_of_user == "image":
     #     image = Image.open('./haha.jpg')
     #     st.image(image, caption='Image Result')
 
 main_haha()
+# gc.collect(generation=1)
+# gc.collect(generation=2)
