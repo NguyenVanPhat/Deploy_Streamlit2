@@ -86,7 +86,6 @@ def main_haha():
 
     # if click and (uploaded_file is None):
     #     st.caption("Làm ơn tải lên Video")
-    os.system("python populate_cache.py")
     os.system("streamlit cache clear")
     st.experimental_singleton.clear()
     st.experimental_memo.clear()
